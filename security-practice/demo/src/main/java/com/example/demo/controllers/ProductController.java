@@ -6,14 +6,12 @@ import com.example.demo.models.ProductDO;
 import com.example.demo.services.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -30,7 +28,7 @@ public class ProductController {
         return "new_product";
     }
 
-    @PostMapping("/save")
+    @RequestMapping(value="/save", method = RequestMethod.POST)
     public String saveProduct(@ModelAttribute("product") ProductDO product){
         productService.saveProduct(product);
 
@@ -50,12 +48,6 @@ public class ProductController {
     public String deleteProduct(@PathVariable Long productId){
         productService.deleteProduct(productId);
         return "redirect:/";
-    }
-
-    @RequestMapping("/new")
-    public ResponseEntity<ProductDO> getProduct(@PathVariable Long productId){
-        ProductDO product = productService.getProduct(productId);
-        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @RequestMapping("/")
