@@ -8,49 +8,62 @@ import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class ProductController {
     
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/products")
-    public ResponseEntity<ProductDO> createProduct(@RequestBody ProductDO product){
-        ProductDO newProduct = productService.createProduct(product);
-        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+    @RequestMapping("/new")
+    public String createProduct(Model model){
+        ProductDO newProduct = new ProductDO();
+        model.addAttribute("product", newProduct);
+        //Returns the name of the related html page.
+        return "new_product";
     }
 
-    @PutMapping("/products")
-    public ResponseEntity<ProductDO> updateProduct(@RequestBody ProductDO product){
-        ProductDO currProduct = productService.updateProduct(product);
-        return new ResponseEntity<>(currProduct, HttpStatus.CREATED);
+    @PostMapping("/save")
+    public String saveProduct(@ModelAttribute("product") ProductDO product){
+        productService.saveProduct(product);
+
+        return "redirect:/";
     }
 
-    @DeleteMapping("/products/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long productId){
+    @RequestMapping("/edit/{productId}")
+    public ModelAndView updateProduct(@PathVariable Long productId){
+        ModelAndView mv = new ModelAndView("edit_product");
+        ProductDO product = productService.getProduct(productId);
+        mv.addObject("product", product);
+
+        return mv;
+    }
+
+    @RequestMapping("/delete/{productId}")
+    public String deleteProduct(@PathVariable Long productId){
         productService.deleteProduct(productId);
-        String message = "Deleted product's id: " + productId;
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return "redirect:/";
     }
 
-    @GetMapping("/products/{productId}")
+    @RequestMapping("/new")
     public ResponseEntity<ProductDO> getProduct(@PathVariable Long productId){
         ProductDO product = productService.getProduct(productId);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<ProductDO>> getAllProducts(){
+    @RequestMapping("/")
+    public String viewHomePage(Model model) {
         List<ProductDO> products = productService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        model.addAttribute("listAllProducts", products);
+
+        return "index";
     }
     
 }
