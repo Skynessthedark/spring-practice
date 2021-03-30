@@ -2,14 +2,14 @@ spring:
     datasource:
         driver-class-name: org.postgresql.Driver
         platform: postgres
-        url: ${SPRING_DATABASE_URL}
-        username: ${SPRING_DATABASE_USERNAME}
-        password: ${SPRING_DATABASE_PASSWORD}
+        url: jdbc:postgresql://localhost:5432/practicesdb
+        username: goksenin
+        password: 1234
     jpa:
         hibernate:
             ddl-auto: update
-            show-sql: true
-            database: postgresql
-            database-platform: org.hibernate.dialect.PostgreSQLDialect
-            open-in-view: false
-            generate-ddl: true
+        show-sql: true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        open-in-view: false
+        generate-ddl: true
