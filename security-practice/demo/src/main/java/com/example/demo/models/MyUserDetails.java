@@ -1,12 +1,9 @@
-package com.example.demo.services;
+package com.example.demo.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import com.example.demo.models.RoleDO;
-import com.example.demo.models.UserDO;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
