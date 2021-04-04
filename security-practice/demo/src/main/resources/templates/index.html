@@ -19,7 +19,7 @@
     </div>
 
     <h1>Products</h1>
-    <a href="/products">Create New Product</a>
+    <a href="/new">Create New Product</a>
     <br><br>
     <table border="1" cellpadding="10">
         <thead>
@@ -40,9 +40,9 @@
                 <td th:text="${product.madeIn}">Product Made In</td>
                 <td th:text="${product.price}">Product Price</td>
                 <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
-                    <a th:href="/@{'/edit' + ${product.id}}">Edit</a>
+                    <a th:href="@{'/edit/' + ${product.id}}">Edit</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a src:authorize="hasAnyAuthority('ADMIN')" th:href="/@{'/delete' + ${product.id}}">Delete</a>
+                    <a src:authorize="hasAnyAuthority('ADMIN')" th:href="@{'/delete' + ${product.id}}">Delete</a>
                 </td>
             </tr>
         </tbody>
