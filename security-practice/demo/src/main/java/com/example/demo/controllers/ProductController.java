@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @Controller
 public class ProductController {
     
@@ -56,6 +57,11 @@ public class ProductController {
         model.addAttribute("listAllProducts", products);
 
         return "index";
+    }
+    
+    @RequestMapping(value="/403", method=RequestMethod.GET)
+    public String error403() {
+        return "403";
     }
     
 }

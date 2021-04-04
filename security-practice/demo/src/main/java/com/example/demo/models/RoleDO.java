@@ -15,7 +15,7 @@ import lombok.Data;
 public class RoleDO {
     
     @Id
-    @Column(name = "role_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
